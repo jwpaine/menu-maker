@@ -1,0 +1,133 @@
+<html>
+    <head>
+       <TITLE>Transparent modal box with css</TITLE>
+       <META name="Author"  lang="it" content="DesirÃ©e Pucci">
+    </head>
+ 
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 
+ <style>
+ 
+ .modalbox .box {
+     background-color: rgba(0,0,0,0.7);
+     margin: 0 auto;
+     min-width: 210px;
+     padding: 40px;
+     width: 30%;
+     margin-top: 100px;
+     }
+     .modalbox .title {
+     border-bottom: 1px solid #ccc;
+     font-family: verdana;
+     font-size: 22px;
+     letter-spacing: 0.2em;
+     margin: 0;
+     padding: 0 0 10px;
+     text-transform: uppercase;
+     color: #fff;
+         }
+     .modalbox .content {
+     display: block;
+     margin: 0 auto;
+      font-family: Verdana;
+     font-size: 12px;
+     letter-spacing: 0.3em;
+     padding: 10px;
+     line-height: 22px;
+     padding: 10px 0 0;
+     color: #fff;
+ 
+ 
+         }
+     .modalbox .close {
+     color: #fff;
+     display: block;
+     float: right;
+     font-family: Verdana;
+     font-size: 22px;
+     height: 25px;
+     text-decoration: none;
+         }
+ 
+ 
+ .modalbox{
+     display: none;
+     position: fixed;
+     z-index: 9999;
+     width: 100%;
+     height: 100%;
+     top: 0;
+     left: 0;
+     color:#333333;
+     }
+ 
+ .modalbox:target {
+     display: block;
+     outline: none;
+ }
+ 
+ 
+ .link-modal{
+     width: 90%;
+     text-align: center;
+     margin: 0 auto;
+     padding-top: 400px;
+     padding-left: 15px;
+ }
+ 
+ 
+ .link-modal a{
+    
+     color: #333333;
+     font-family: Verdana;
+     font-size: 20px;
+     letter-spacing: 0.3em;
+     padding: 10px;
+     text-decoration: none;
+     text-transform: uppercase;
+ }
+ 
+ 
+ </style>
+ 
+ </head>
+ <body>
+ <div class="modalbox" id="text">
+   <div class="box">
+     <p class="title">Swap Builder</p>
+     <div class="content">
+      <div style="margin: 0 auto; padding: 10px;">
+     
+       <b>Login as a tester</b> </br>
+     
+  <a href="/auth/facebook"><button type="button" class="fa fa-facebook-square btn btn-primary"> Continue with Facebook</button></a>
+ 
+ 
+   </div>
+     </div>
+   </div>
+ </div>
+ <div class="link-modal" id="linkmodal">
+ <a href="#text">#GETBETTER</a></div>
+ 
+ 
+ 
+ 
+ <script>
+ $(document).ready(function() { 
+     $.post( "/getBackground", function( data ) {
+ 
+       var background = 'url(' + data + ')';
+      $('body').css('background-image', background);
+      $('#modalbox').modal('show');
+     });
+ });
+ 
+ </script>
+ 
+ </body>
+ </html>

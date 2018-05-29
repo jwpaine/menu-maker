@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,700');
+
+body {
+    background-color: #5fb3f1;
+    font-family: 'Railway', 'Arial';
+    color: #fff;
+}
+.color-dark {
+    background-color: #2885c4 !important;
+}
+.color-light {
+    background-color: #5fb3f1 !important;
+}
+.color-light-2 {
+    background-color: #3fa0e1 !important;
+}
+.color-navy {
+    color: white !important;
+    background-color: #003a61 !important;
+}
+a.btnn {
+    border: 0;
+    display: block;
+    padding: 1em 3em;
+    background-color: #a5f883;
+    color: #003a61;
+    cursor: pointer;
+    height: 50px;
+    width: 220px;
+}
+#checkout {
+    width: 100%;
+    text-align: center;
+}
+a.btnn:hover {
+    background-color: #9ae97b;
+}
+.nav-wrapper {
+    background-color: #003a61 !important;
+}
+.nav-wrapper i.material-icons {
+ color: white;
+}
+.category-item img {
+    height:200px; 
+    width:100%;
+    object-fit: cover;
+}
+.menuitem {
+    background-color: #5fb3f1;
+}
+.my_order button {
+    width: 100%;
+    background-color: #2E86C1;
+    color: white;
+    height: 50px;
+}
+.my_order button:hover {
+      
+        background-color: #3498DB;
+}
+.hidden {
+    display:none;
+}
+
+

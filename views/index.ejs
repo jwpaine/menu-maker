@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+          <link rel="stylesheet" href="/static/css/main.css">
+        <style>
+    
+            body {
+                background-color: #2e9ce6;
+            }
+           
+            .category-item img {
+               height:200px; 
+                width:100%;
+                object-fit: cover;
+               
+            }
+            .page {
+                margin: 0 auto;
+                width: 75%;
+              
+            }
+            .label {
+                background:  rgba(27, 27, 27, 0.6);
+                width: 100%;
+                color: white;
+                font-size:18px !important;
+                padding: 0px !important;
+                text-align: center;
+            }
+
+            p.uppercase {
+                text-transform: uppercase;
+                color: black;
+            
+                font-size: 20px;
+              
+            }
+
+            .search {
+                /*   margin: 0 auto; */
+                
+                
+                   padding: 20px;
+                   padding-top: 20px;
+                   color: #333333;
+                    font-family: Arial, Helvetica, sans-serif;
+               }
+            .center {
+                margin: 0 auto;
+                width: 100%;
+            }
+
+           
+            header, main, footer {
+            padding-left: 300px;
+          }
+         
+          .login {
+              margin: 0 auto;
+              text-align: center;
+              width: 400px;
+              padding: 5px;
+              color: #003a61;
+          }
+        .loginbutton {
+        
+            display:block;
+            text-align:center;
+            margin-top:8px;
+            height:40px;
+            padding: 8px 0;
+            color: white;
+          }
+          .loginbutton.local {
+            background-color:#EC5500 !important;
+          }
+          .loginbutton.fb {
+              background-color:#4169E1 !important;
+          }
+      
+          @media only screen and (max-width : 992px) {
+            header, main, footer {
+              padding-left: 0;
+            }
+          }
+          
+	  .banner {
+    /*	background-image: url("https://s3.us-east-2.amazonaws.com/takeout.photos/splash.jpg"); */
+			background-size: cover;
+        padding: 3em;
+		height: 300px;
+		
+				width: 100%;
+             
+	  }
+     
+     
+      .banner h1 {
+        font-size: 60px;
+        font-weight: bold;
+        text-align: center;
+        font-family: "Roboto", sans serif;
+        color: white;
+        background:rgba(27, 27, 27, 0.7);
+        padding: 10px;
+        float: left;
+        margin-top: 40px;
+
+      }
+      .banner h2 {
+        font-size: 40px;
+      }
+      .banner h3 {
+        font-size: 20px;
+      }
+      .footer {
+         
+          height: 50px;
+          width: 100%;
+          position: absolute;
+          bottom: 0px;
+      }
+      input {
+          background-color: white !important;
+          width: 100% !important;
+          
+      }
+      .col {
+          text-align: center !important;
+          margin: 0 auto !important;
+         
+      }
+            
+        
+
+        </style>
+    </headf>
+    <body>
+
+            <nav id='test' >
+                    <div class="nav-wrapper">
+                       
+                      <ul class="right">
+                          
+                        <li><a id='account' href="#"><i class="material-icons">account_box</i></a></li>
+                       
+                        
+                      </ul>
+                      
+                    </div>
+                  </nav>
+                 
+                  <footer class="banner color-light valign-wrapper">
+                     
+                                
+                                
+                        <div class="container ">
+                                <h1>FUEL UP</h1>
+                                   
+                            
+                             
+                            
+                          <div class="row">
+
+                               
+                              
+                                <div class="col l6 m6 s12">
+                                    
+                                    
+                                        <div class="row search color-light-2 z-depth-5">
+                                            
+                                              
+                                                      
+                                                  <input id="search" type="text" placeholder="Enter Address" autocomplete="on">
+                                               
+                                                   
+                                               
+                                                    <a id="find" class="btnn">Find Restaurants</a>
+                                                
+                                                
+                                        </div>
+                                        
+                                </div>
+                            
+                          </div>
+                        </div>
+                      </footer>
+
+                       <!-- Modal Structure -->
+            <div id="login_modal" class="modal">
+                    <div class="modal-content">
+                            <div class="login">
+                                    <input type="email" id='email' size='10' placeholder="Email Address">
+                                    <input type="password" id='password' size='20' placeholder="Password">
+                                   
+                                    <a href="#"  class="loginbutton local">
+                                        Login
+                                    </a>
+                                    <a href="/auth/facebook"  class="loginbutton fb">
+                                        Continue with Facebook
+                                    </a>
+                                    <br>
+                                    New to Menufuel? <a href="#" id="signup_click">Signup</a>
+                            </div>
+                    </div>
+                   
+                </div>
+                <div id="signup_modal" class="modal">
+                    <div class="modal-content">
+                            <div class="login">
+                                <!--    <input type="email" id='email' size='10' placeholder="Email Address">
+                                    <input type="password" id='password' size='20' placeholder="Password">
+                                   
+                                    <a href="#"  class="loginbutton local">
+                                        Signup
+                                    </a>
+                                    <a href="/auth/facebook"  class="loginbutton fb">
+                                        Continue with Facebook
+                                    </a>
+                                -->
+                                    <h3>Check back soon!</h3>
+                                    <br>
+                                    Already a member? <a href="#" id="login_click">Login</a>
+                            </div>
+                    </div>
+                   
+                </div>
+
+                <div class="footer">
+
+                </div>
+               
+
+
+
+
+        <script>
+           
+           $(document).ready(function(){
+           $('#account').on('click', function(e) {
+                $('#login_modal').modal('open');
+            })
+           $('.modal').modal({
+                    dismissible: true
+            });
+    });
+            $('#find').on('click', function (e) {
+                  //  var term = document.getElementById("search").value;
+                        var term = $('#search').val()
+                    if (term == "") {
+                        alert("Please enter address")
+                        return
+                    }
+                   
+                        window.location="/restaurants/" + term;
+                });
+            $('#signup_click').on('click', function (e) {
+                $('#login_modal').modal('close');
+                $('#signup_modal').modal('open');
+            });
+            $('#login_click').on('click', function (e) {
+                $('#login_modal').modal('open');
+                $('#signup_modal').modal('close');
+            });
+
+
+        </script>
+    </body>
+</html>

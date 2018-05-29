@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        
+          <!-- Compiled and minified JavaScript -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+          <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+       
+        
+        <style>
+            
+            html {
+                 background-color: #F2F3F4;
+            }
+            .category-item img {
+               height:200px; 
+                width:100%;
+                object-fit: cover;
+               
+            }
+            .page {
+                margin: 0 auto;
+                width: 75%;
+              
+            }
+            .label {
+                background:  rgba(27, 27, 27, 0.6);
+                width: 100%;
+                color: white;
+                font-size:18px !important;
+                padding: 0px !important;
+                text-align: center;
+            }
+
+            p.uppercase {
+                text-transform: uppercase;
+                color: black;
+            
+                font-size: 20px;
+              
+            }
+
+
+            i.material-icons {
+                color: #154360;
+            }
+        
+
+           
+        </style>
+    </headf>
+    <body>
+
+           
+                  <nav>
+                    <div class="nav-wrapper white">
+                       
+                      <ul class="right">
+                          
+                        <li><a href="/account"><i class="material-icons">account_box</i></a></li>
+                       
+                        
+                      </ul>
+                      
+                    </div>
+                  </nav>
+                  <ul class="collapsible" data-collapsible="accordion">
+                        <li>
+                          <div class="collapsible-header"><i class="material-icons">restaurant_menu</i>My Restaurants</div>
+                          <div class="collapsible-body">
+
+                            <div class="fixed-action-btn vertical click-to-toggle">
+                                <a class="btn-floating btn-large blue waves-light pulse">
+                                  <i class="material-icons">menu</i>
+                                </a>
+                                <ul>
+                                  <li><a class="btn-floating orange"><i id="showall" class="material-icons">apps</i></a></li>
+                                  <li><a class="btn-floating red"><i id="delete" class="material-icons">delete</i></a></li>
+                                  <li><a class="btn-floating green"><i id="add" class="material-icons">add</i></a></li>
+                                </ul>
+                        </div>
+
+                                <div ng-app="myApp" ng-controller="customersCtrl"> 
+                                        <div class="row">
+                                             <% for (var i = 0; i < grants.length; i++) { %>
+
+                                                <div class="col s12 m6 l4" ng-repeat="x in categories">
+                                                    <div class="card">
+                                                        <div class="card-image category-item z-depth-2">
+                                                                <a href='/b/<%= grants[i].id %>'>
+                                                            <img src='https://s3.us-east-2.amazonaws.com/takeout.photos/<%= grants[i].image%>'>
+                                                            </a>
+                                                            <span class="card-title label"><%= grants[i].name %></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            <% } %>
+
+                                        </div>
+                                    </div>
+                          </div>
+
+                        </li>
+                        <li>
+                          <div class="collapsible-header"><i class="material-icons">whatshot
+                            </i>What's Hot</div>
+                          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                        </li>
+                      </ul>
+
+                     
+        <script>
+  
+  function handle(e){
+        if(e.keyCode === 13){
+            e.preventDefault(); // Ensure it is only this code that rusn
+
+            var term = document.getElementById("search").value;
+
+            if (term != "") {
+              $.ajax({
+                    type: 'POST',
+                    url: '/search',
+                    data: { 
+                        term : term
+                    },
+                    success: function(msg){
+                      alert(msg)
+                    }
+                  });
+              }
+          }
+      }
+ 
+      $('.tap-target').tapTarget('open');
+     
+        </script>
+    </body>
+</html>

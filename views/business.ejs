@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        
+          <!-- Compiled and minified JavaScript -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+          <link rel="stylesheet" href="/static/css/main.css">
+        <style>
+            
+            body {
+                 background-color: #F2F3F4;
+            }
+            .category-item img {
+               height:200px; 
+                width:100%;
+                object-fit: cover;
+               
+            }
+            .page {
+                margin: 0 auto;
+                width: 75%;
+              
+            }
+            .label {
+                background:  rgba(27, 27, 27, 0.6);
+                width: 100%;
+                color: white;
+                font-size:18px !important;
+                padding: 0px !important;
+                text-align: center;
+            }
+
+            p.uppercase {
+                text-transform: uppercase;
+                color: black;
+            
+                font-size: 20px;
+              
+            }
+
+            .banner img {
+                height:200px; 
+                 width:100%;
+                 object-fit: cover;
+                
+             }
+             .hot {
+                 color: #D35400;
+             }
+             .button-collapse {
+                 color: white;
+             }
+             .orderitem {
+                
+                 background-color: #F2F3F4;
+                 color: black;
+                 padding: 1px;
+             }
+             .item {
+                 padding: 20px;
+             }
+             .delete {
+                 color: gray;
+             }
+             .side-nav {
+                 padding-top: 10px;
+             }
+             .ordernav {
+                
+                background-color: #F2F3F4;
+                 min-height: 100vh !important;
+                 margin-top: 0px;
+                 padding: 0px !important;
+       
+             }
+             .col {
+                background-color: #F2F3F4;
+                padding: 0px !important;
+             }
+             
+             .nav-wrapper i {
+                color: #154360;
+            }
+            .restaurant{
+                border-radius: 50%;
+                height: 100px;
+                width: 100px;
+                margin-left: 50px;
+                margin-bottom: 10px;
+                z-index: 1000;
+            }
+
+            .my_order h5 {
+                color: black;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 30px;
+                font-weight: 100;
+                margin-left: 10px;
+            }
+            .my_order h6 {
+                color: #333333;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 18px;
+                font-weight: 300;
+                margin-left: 10px;
+            }
+            .my_order.header {
+              
+                height: 120px;
+                margin: 0 auto;
+                width: 100%;
+                padding: 0px !important;
+            }
+            #empty_order h4 {
+                color: #333333;
+                text-align: center;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 20px;
+                margin-top: 100px;
+                font-weight: 300;
+            }
+            .top-left {
+                position: absolute;
+                top: 8px;
+                left: 16px;
+                background-color: white;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 18px;
+                color: black;
+
+            }
+            .menuitem {
+                padding: 5px !important;
+            }
+            .business-name h5 {
+                margin-left: 20px;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 25px;
+                font-weight: normal;
+                margin-bottom: 32px;
+            }
+            .business-name {
+                height: 0px;
+                background-color: #F2F3F4;
+                color: #333333;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .orderitem a {
+                color: red;
+                margin-left: 95%;
+            }
+            .banner {
+                background-image: url("https://s3.us-east-2.amazonaws.com/takeout.photos/splash.jpg");
+                background-size: cover;
+                height: 200px;
+                margin: 0 auto;
+                width: 100%;
+	        }
+          
+            
+             
+        </style>
+    </head>
+    <body>
+                  <nav>
+                    <div class="nav-wrapper">
+                       
+                      <ul class="right">
+                            <li><a href="/account"><i class="material-icons">account_box</i></a></li>
+                      <li></li>
+                        
+                      </ul>
+                    </div>
+                  </nav>
+
+
+                 
+        <div ng-app="myApp" ng-controller="customersCtrl"> 
+            <div class="row">
+                <div class="col s6 m9 l9 ">
+                    <div class="header">
+                            <footer class="business-name valign-wrapper">
+
+                                  
+                             <img src="<%= business.image %>" class="restaurant">
+                            
+                        
+                                                 
+                            </footer>
+                    </div>
+
+                    <footer class="page-footer banner">
+                        <div class="container">
+                          <div class="row">
+                              
+
+                          </div>
+                        </div>
+                       
+                      </footer>
+
+                      <div class="row">
+                        <div class="col menuitem s12 m6 l4 " ng-repeat="x in categories">
+                            <div class="card">
+                                <div class="card-image category-item z-depth-2">
+                                    <img id ="{{ x.image }}" ng-src="{{ x.image }}">
+                                    <span class="card-title label">{{x.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                <i id="show_categories" class="material-icons"> <a class="waves-effect waves-light btn">Categories</a></i>
+       
+                </div>
+                <div class="col s6 m3 l3 ordernav z-depth-1">
+                    <div class="my_order header">
+                        <h5>My Order</h5>
+                        <h6><%= business.name %></h6>
+                        <button id="checkout" class="btn waves-effect checkout waves-light" type="submit" name="action">Checkout: ${{cart.totalPrice | currency:''}}
+                            <i class="material-icons right">shopping_cart</i>
+                          </button>
+                          <div id="empty_order"><h4>An empty order ☹ Why not add something yummy?</h4></div>
+                    </div>
+                   
+                     
+                   
+                    <ul class="collection">
+                        
+                        <div ng-repeat="x in myorder" class="orderitem">
+                                <li class="collection-item avatar">
+                                <img ng-src="https://s3.us-east-2.amazonaws.com/takeout.photos/{{ x.image }}" alt="" class="circle">
+                                <span class="title">{{x.item}}</span>
+                                <p>${{x.price}}</p>
+                                <a href ng-click="removeItem(x.id)" ><i id="removeItem" class="material-icons">cancel</i></a>
+                                </li>
+                        </div>
+                    </ul>
+                </div>
+                
+
+            </div>
+        </div>
+                  
+                 
+        <div ng-repeat="x in myorder" class="orderitem"> <a href ng-click="removeItem({{x.id}})" ></a> </div>
+
+        <script>
+
+            app = angular.module('myApp', []);
+            app.controller('customersCtrl', function($scope, $http) {
+                getCategories($scope, $http);
+                getOrder($scope, $http);
+                $scope.cart = { totalPrice : 0 };
+                $(document).on('click', 'img', function (event) { 
+                
+                    for (var i in items) {
+                        if (items[i].image === event.target.id) {
+                            //found
+                            if (items[i].category) {
+
+                                category = items[i].name;
+                                getItems(category, $scope, $http)
+                                return
+                            }
+                            showItem(items[i], $scope, $http)
+                            return
+                        }
+                    }
+                });
+                $scope.removeItem = function(id) {
+                    myobject = {'id': id}
+                    
+                    Object.toparams = function ObjecttoParams(obj) {
+                        var p = [];
+                        for (var key in obj) {
+                            p.push(key + '=' + encodeURIComponent(obj[key]));
+                        }
+                        return p.join('&');
+                    };
+                    $http({
+                        method: 'POST',
+                        url: '/removeOrderItem',
+                        data: Object.toparams(myobject),
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    }).then(function (response) {
+                        if (response.data == "ok") {
+                            getOrder($scope, $http);
+                        }
+                    })
+                }
+                $('.button-collapse').sideNav({
+                        menuWidth: 300, // Default is 300
+                        edge: 'right', // Choose the horizontal origin
+                        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                        draggable: true, // Choose whether you can drag to open on touch screens,
+                        onOpen: function(el) {
+                            getOrder($scope, $http);
+                        }, // A function to be called when sideNav is opened
+                        onClose: function(el) {
+                            
+                         }, // A function to be called when sideNav is closed
+                    }
+                );
+               
+                $('#removeItem').on('click', function (e) {
+                   alert("deleted!");
+                })
+                $('#show_categories').on('click', function (e) {
+                    getCategories($scope, $http);
+                })
+                $('#showall').on('click', function (e) {
+                    getCategories($scope, $http);
+                 })
+                $('#add').on('click', function (e) {
+                  
+                    if (category != null) {
+                        addItem(category, $scope, $http);
+                        return
+                    }
+                    addCategory($scope, $http);
+                })
+                $('#delete').on('click', function (e) {
+                    if (category != null) {
+                        delCategory(category, $scope, $http);
+                        return
+                    }
+                    alert("Select Category First")
+                })
+            });
+
+            function getOrder($scope, $http) {
+                $http({
+                    method: 'POST',
+                    url: '/getOrder',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function (response) {
+                    if (response.data == "err") {
+                        return
+                    }
+                 
+                    $scope.myorder = response.data;
+                    if (response.data.length == 0) {
+                        $('#empty_order').removeClass('hidden');
+                    } else {
+                        $('#empty_order').addClass('hidden');
+                    }
+                     $scope.cart.totalPrice = 0;
+                      for (var i in response.data) {
+                            $scope.cart.totalPrice += (Number(response.data[i].price)); 
+                        }
+                     
+                })
+            }
+           
+
+            function getCategories($scope, $http) {
+                // hide categories button
+                var x = document.getElementById("show_categories");
+                x.style.display = "none";
+
+                category = null;
+                myobject = {'id': getId()}
+                Object.toparams = function ObjecttoParams(obj) {
+                    var p = [];
+                    for (var key in obj) {
+                        p.push(key + '=' + encodeURIComponent(obj[key]));
+                    }
+                    return p.join('&');
+                };
+                $http({
+                    method: 'POST',
+                    url: '/categories',
+                    data: Object.toparams(myobject),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function (response) {
+                    $scope.categories = response.data;
+                    items = response.data;
+                   
+                })
+            }
+            function getSubCategories($scope, $http) {
+                // hide categories button
+                var x = document.getElementById("show_categories");
+                x.style.display = "none";
+
+                myobject = {'id': getId(), 'category' : category}
+                Object.toparams = function ObjecttoParams(obj) {
+                    var p = [];
+                    for (var key in obj) {
+                        p.push(key + '=' + encodeURIComponent(obj[key]));
+                    }
+                    return p.join('&');
+                };
+                $http({
+                    method: 'POST',
+                    url: '/subCategories',
+                    data: Object.toparams(myobject),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function (response) {
+                   
+                 //   $scope.subcategories = response.data
+                   for (var i in response.data) {
+                        items.push(response.data[i])
+                    } 
+                })
+            }
+            
+
+
+            function getItems(category, $scope, $http) {
+                // show categories button
+                var x = document.getElementById("show_categories");
+                x.style.display = "block";
+                       
+                myobject = {'id': getId(), 'category' : category}
+                Object.toparams = function ObjecttoParams(obj) {
+                    var p = [];
+                    for (var key in obj) {
+                        p.push(key + '=' + encodeURIComponent(obj[key]));
+                    }
+                    return p.join('&');
+                };
+                $http({
+                    method: 'POST',
+                    url: '/items',
+                    data: Object.toparams(myobject),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function (response) {
+                  
+                    items = response.data
+                    $scope.categories = items;
+                    getSubCategories($scope, $http);
+                   
+                })
+                
+            } 
+
+
+            function addToOrder($scope, $http, item) {
+                myobject = {'id': getId(), 'item' : JSON.stringify(item)}
+                Object.toparams = function ObjecttoParams(obj) {
+                    var p = [];
+                    for (var key in obj) { 
+                        p.push(key + '=' + encodeURIComponent(obj[key]));
+                    }
+                    return p.join('&');
+                };
+                $http({
+                    method: 'POST',
+                    url: '/addToOrder',
+                    data: Object.toparams(myobject),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function (response) {
+                    
+                    getOrder($scope, $http);
+                    var $toastContent = $('<span>Item Added</span>');
+                    Materialize.toast($toastContent, 2000);
+                   
+                })
+            }
+            
+            function showItem(item, $scope, $http) {
+
+                swal({
+                    icon : item.image,
+                    title : item.name,
+                    text : item.description + " - $" + item.price,
+                    buttons: {
+                        delete: {
+                            text: "Add to order",
+                            value: "add",
+                        },
+                        cancel : true
+                    }
+                }).then((value) => {
+
+                    if (value == "add") {
+
+                        addToOrder($scope, $http, item);
+                    }
+                })
+            }
+            function delCategory(category, $scope, $http) {
+               
+                swal({
+                            title: 'Are you sure?',
+                            text: 'Removing category will also remove items. This action cannot be reversed',
+                        buttons: {
+                            confirm: {
+                                text: "Yes, delete category",
+                                value: "delete",
+                            },
+                            cancel : true
+                        }
+                }).then((value) => {
+
+                    if(value == 'delete') {
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "/deleteCategory",
+                        data: {
+                            id : getId(),
+                            category : category
+                        },
+                        success: function(data) {
+                        if (data == "success") {
+                            var $toastContent = $('<span>Removed ' + category + '</span>');
+                            Materialize.toast($toastContent, 3000);
+                            getCategories($scope, $http);
+                        } else {
+                            swal(
+                            'Error!',
+                            'Your item could not be deleted. Please try again',
+                            'error',
+                            )
+                        }
+                        
+                        }
+                    });
+                    return
+                    }
+
+                })
+            }
+          
+            function getId() {
+                var parts = window.location.href.split('/');
+                var id = parts.pop() || parts.pop();  // handle potential trailing slash
+                return id
+            }
+        </script>
+    </body>
+</html>

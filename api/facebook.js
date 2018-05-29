@@ -1,0 +1,3 @@
+var graph = require('fbgraph');
+var accessToken = "EAAdVwf4ZAZC3IBADOBeZAFYFQ26bSsl5ZAc4VwLov9xv3qIA9gD130F7HBSSyMAPdXZCSurYk4s3kADVSNKfZBulvrouYx1V6fHZBIXxWCR5SSpk2kOEQMEDdgCmCqOzZAuKK2m7beeEKHyoZCFhtWICX4S7fZCZAvCkdNNh467y6oB31i2X1F7oQxZBMzZCrAZCrX4X8ZD"
+FB.setAccessToken(accessToken);

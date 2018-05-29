@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        
+          <!-- Compiled and minified JavaScript -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        
+        <style>
+            
+            html {
+                 background-color: #F2F3F4;
+            }
+            .category-item img {
+               height:200px; 
+                width:100%;
+                object-fit: cover;
+               
+            }
+            .page {
+                margin: 0 auto;
+                width: 75%;
+              
+            }
+            .label {
+                background:  rgba(27, 27, 27, 0.6);
+                width: 100%;
+                color: white;
+                font-size:18px !important;
+                padding: 0px !important;
+                text-align: center;
+            }
+
+            p.uppercase {
+                text-transform: uppercase;
+                color: black;
+            
+                font-size: 20px;
+              
+            }
+
+            .banner img {
+                height:200px; 
+                 width:100%;
+                 object-fit: cover;
+                
+             }
+             i.material-icons {
+                color: #154360;
+            }
+           
+           
+        </style>
+    </headf>
+    <body>
+                  <nav>
+                    <div class="nav-wrapper white">
+                       
+                      <ul class="right">
+                          
+                       
+                        <li><a href="/dash"><i class="material-icons">view_module</i></a></li>
+                        <li><a href="/account"><i class="material-icons">account_box</i></a></li>
+                        
+                      </ul>
+                      
+                      
+                    </div>
+                  </nav>
+
+                 
+                  <ul class="collapsible" data-collapsible="accordion">
+                        <li>
+                          <div class="collapsible-header"><i class="material-icons">restaurant</i>Menu</div>
+                          <div class="collapsible-body">
+
+
+                                <div ng-app="myApp" ng-controller="customersCtrl"> 
+                                        <div class="row">
+
+                                            <div class="col s12 m6 l4" ng-repeat="x in categories">
+                                                <div class="card">
+                                                    <div class="card-image category-item z-depth-2">
+                                                        <img id ="{{ x.image }}" src="{{ x.image }}">
+                                                        <span class="card-title label">{{x.name}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+
+                                        </div>
+                                    </div>
+
+                                    <div class="fixed-action-btn vertical click-to-toggle">
+                                            <a class="btn-floating btn-large blue pulse">
+                                              <i class="material-icons">menu</i>
+                                            </a>
+                                            <ul>
+                                              <li><a class="btn-floating orange"><i id="showall" class="material-icons">apps</i></a></li>
+                                              <li><a class="btn-floating red"><i id="delete" class="material-icons">delete</i></a></li>
+                                              <li><a class="btn-floating green"><i id="add" class="material-icons">add</i></a></li>
+                                            </ul>
+                                          </div>
+
+
+                          </div>
+                        </li>
+                        <li>
+                          <div class="collapsible-header"><i class="material-icons">insert_chart
+                            </i>Stats</div>
+                          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                        </li>
+                       
+                        <li>
+                                <div class="collapsible-header"><i class="material-icons">settings</i>Settings</div>
+                                <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                              </li>
+                      </ul>
+
+                      
+                   
+       
+        <script>
+           
+            app = angular.module('myApp', []);
+            app.controller('customersCtrl', function($scope, $http) {
+                getCategories($scope, $http);
+                $(document).on('click', 'img', function (event) { 
+                    for (var i in items) {
+                        if (items[i].image === event.target.id) {
+                            //found
+                            if (items[i].category) {
+                                category = items[i].name;
+                                getItems(category, $scope, $http)
+                                return
+                            }
+                            showItem(items[i], $scope, $http)
+                            return
+                        }
+                    }
+                });
+                $('#showall').on('click', function (e) {
+                      
+                        getCategories($scope, $http);
+                    })
+                $('#add').on('click', function (e) {
+                  
+                        if (category != null) {
+                           
+                            addItem(category, $scope, $http);
+                        return
+                    }
+                            addCategory($scope, $http);
+                })
+                $('#delete').on('click', function (e) {
+                    if (category != null) {
+                      
+                        delCategory(category, $scope, $http);
+                        return
+                    }
+                    alert("Select Category First")
+                })
+            });
+
+            function getCategories($scope, $http) {
+                category = null;
+                myobject = {'id': getId()}
+                Object.toparams = function ObjecttoParams(obj) {
+                    var p = [];
+                    for (var key in obj) {
+                        p.push(key + '=' + encodeURIComponent(obj[key]));
+                    }
+                    return p.join('&');
+                };
+                $http({
+                    method: 'POST',
+                    url: '/categories',
+                    data: Object.toparams(myobject),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function (response) {
+                    $scope.categories = response.data;
+                    items = response.data;
+                })
+            }
+            function getSubCategories($scope, $http) {
+                // hide categories button
+              
+            
+                myobject = {'id': getId(), 'category' : category}
+                Object.toparams = function ObjecttoParams(obj) {
+                    var p = [];
+                    for (var key in obj) {
+                        p.push(key + '=' + encodeURIComponent(obj[key]));
+                    }
+                    return p.join('&');
+                };
+                $http({
+                    method: 'POST',
+                    url: '/subCategories',
+                    data: Object.toparams(myobject),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function (response) {
+                 
+              
+                   for (var i in response.data) {
+                        items.push(response.data[i])
+                    } 
+                })
+            }
+            function getItems(category, $scope, $http) {
+                myobject = {'id': getId(), 'category' : category}
+                Object.toparams = function ObjecttoParams(obj) {
+                    var p = [];
+                    for (var key in obj) {
+                        p.push(key + '=' + encodeURIComponent(obj[key]));
+                    }
+                    return p.join('&');
+                };
+                $http({
+                    method: 'POST',
+                    url: '/items',
+                    data: Object.toparams(myobject),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function (response) {
+                    $scope.categories = response.data;
+                    items = response.data;
+                    getSubCategories($scope, $http);
+                })
+            } 
+            function addCategory($scope, $http) {
+                swal({
+                    title: "Category Name:",
+                    content: "input",
+                }).then((name) => {
+                    if (name == null) {
+                        return
+                    }
+                    title: "Url to image:"
+                    swal({
+                        title: "Url to image:",
+                        content: "input",
+                    }).then((image) => {
+                        swal({
+                            icon : image,
+                            title : name,
+                            buttons: {
+                                add: {
+                                    text: "Add Category to Menu",
+                                    value: "add",
+                                },
+                                cancel : true
+                            }
+                    }).then((value) => {
+
+                        if(value == 'add') {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/addCategory',
+                                data: { 
+                                    'id': getId(), 
+                                    'category' : name,
+                                    'image' : image
+                                },
+                                success: function(msg){
+                                    var $toastContent = $('<span>Added ' + name + '</span>');
+                                    Materialize.toast($toastContent, 3000);
+                                    getCategories($scope, $http);
+                                    return
+                                }
+                            }); 
+                            return
+                            }
+                        });
+                    })
+                });
+            }
+            function showItem(item, $scope, $http) {
+                
+                swal({
+                    icon : item.image,
+                    title : item.name,
+                    text : item.description + " - $" + item.price,
+                    buttons: {
+                        delete: {
+                            text: "Delete Item",
+                            value: "delete",
+                        },
+                        cancel : true
+                    }
+                }).then((value) => {
+
+                    if (value == "delete") {
+
+                        swal({
+                            title: 'Are you sure?',
+                    
+                        buttons: {
+                            confirm: {
+                                text: "Yes, delete item",
+                                value: "delete",
+                            },
+                            cancel : true
+                        }
+                }).then((value) => {
+
+                    if(value == 'delete') {
+                   
+                    $.ajax({
+                        type: "POST",
+                        url: "/deleteItem",
+                        data: {
+                            id : getId(),
+                            item : item.name
+                        },
+                        success: function(data) {
+                        if (data == "success") {
+                            swal(
+                            'Deleted!',
+                            'Your item has been deleted.',
+                            'success',
+                            )
+                            getItems(category, $scope, $http)
+                            return
+                        }
+                        swal(
+                            'Error!',
+                            'Your item could not be deleted. Please try again',
+                            'success',
+                            )
+                        }
+                    });
+                    return
+                    }
+                    
+                //    window.location.replace("/dash");
+                })
+
+                    }
+
+                })
+
+            }
+            function delCategory(category, $scope, $http) {
+               
+                swal({
+                            title: 'Are you sure?',
+                            text: 'Removing category will also remove items. This action cannot be reversed',
+                        buttons: {
+                            confirm: {
+                                text: "Yes, delete category",
+                                value: "delete",
+                            },
+                            cancel : true
+                        }
+                }).then((value) => {
+
+                    if(value == 'delete') {
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "/deleteCategory",
+                        data: {
+                            id : getId(),
+                            category : category
+                        },
+                        success: function(data) {
+                        if (data == "success") {
+                            var $toastContent = $('<span>Removed ' + category + '</span>');
+                            Materialize.toast($toastContent, 3000);
+                            getCategories($scope, $http);
+                        } else {
+                            swal(
+                            'Error!',
+                            'Your item could not be deleted. Please try again',
+                            'error',
+                            )
+                        }
+                        
+                        }
+                    });
+                    return
+                    }
+
+                })
+            }
+            function addItem(category, $scope, $http) {
+                swal({
+                    title: "Item Name:",
+                    text: "(Adding new item under " + category + ")",
+                    content: "input",
+                }).then((name) => {
+                    if (name == null) {
+                        return
+                    }
+                    swal({
+                    title: "Item Description:",
+                    content: "input",
+                }).then((description) => {
+                    
+                    swal({
+                        title: "Item Price:",
+                        content: "input",
+                    }).then((price) => {
+                            swal({
+                            title: "Image url:",
+                            content: "input"
+                            }).then((image) => {
+                                swal({
+                                title: "ASIN:",
+                                content: "input",
+                            }).then((asin) => {
+                                swal({
+                                title: "Affiliate link:",
+                                content: "input",
+                            }).then((link) => {
+                                swal({
+                                    icon : image,
+                                    title : name,
+                                    text : category,
+                                    text : price,
+                                    buttons: {
+                                        add: {
+                                            text: "Add Item to Category",
+                                            value: "add",
+                                        },
+                                        cancel : true
+                                    }
+                                }).then((value) => {
+                                    if(value == 'add') {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/addItem',
+                                            data: { 
+                                                'id': getId(), 
+                                                'category' : category,
+                                                'name' : name,
+                                                'description' : description,
+                                                'price' : price,
+                                                'image' : image,
+                                                'asin' : asin,
+                                                'link' : link,
+                                                'option' : '0'
+                                            },
+                                            success: function(msg){
+                                                var $toastContent = $('<span>Added ' + name + '</span>');
+                                                Materialize.toast($toastContent, 3000);
+                                            
+                                                getItems(category, $scope, $http)
+                                            }
+                                        }); 
+                                        
+                                        return
+                                            }
+                                    });
+                                })
+                            })
+                        });
+                    });
+                });
+            });
+
+            }
+            function getId() {
+                var parts = window.location.href.split('/');
+                var id = parts.pop() && parts.pop(); // handle potential trailing slash
+                return id
+            }
+        </script>
+    </body>
+</html>

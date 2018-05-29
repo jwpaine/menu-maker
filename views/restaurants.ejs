@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        
+          <!-- Compiled and minified JavaScript -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+          <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+          <link rel="stylesheet" href="/static/css/main.css">
+        
+        <style>
+            
+           body {
+            background-color: #F2F3F4;
+            color: black;
+           }
+            
+            .page {
+                margin: 0 auto;
+                width: 10%;
+            }
+            .label {
+                background:  rgba(27, 27, 27, 0.6);
+                width: 100%;
+                color: white;
+                font-size:18px !important;
+                padding: 0px !important;
+                text-align: center;
+            }
+
+            p.uppercase {
+                text-transform: uppercase;
+                color: black;
+                font-size: 20px;
+            }
+
+            .search {
+                padding: 20px;
+              /*  padding-top: 20px; */
+                color: #333333;
+                font-family: Arial, Helvetica, sans-serif;
+                width: 100%;
+            }
+            .location {
+                padding: 5px;
+                padding-left: 10px;
+                color: #333333;
+                font-family: Arial, Helvetica, sans-serif;
+                width: 100%;
+                background-color: white;
+                font-size: 18px;
+            }
+
+            .refer {
+                color: #333333;
+                font-family: Arial, Helvetica, sans-serif;
+                width: 100%;
+               
+                padding: 10px;
+                margin-top: 5px;
+            }
+            .refer a {
+                color:  #2885c4 !important;
+            }
+            .refer h5 {
+                font-size: 18px;
+            }
+           
+            .parallax-container {
+                height: 200px;
+            }
+            i.material-icons {
+                color: #154360;
+            }
+
+         
+          @media only screen and (max-width : 992px) {
+            header, main, footer {
+              padding-left: 0;
+            }
+          }
+
+          .container {
+              margin: 0 auto;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+          }
+
+          .input-field {
+              height: 100%;
+          }
+
+          .modal {
+               width: 400px !important ;
+               height: 75px !important ; 
+               margin: 0 auto !important ; 
+
+               position: absolute !important ; 
+                top: 345px !important ; 
+                right: 20px !important ; 
+                overflow-y: hidden!important;
+               }  
+
+          
+
+               .badge.results{
+                margin-top: 5px;
+               }
+               .page-footer {
+		background-image: url("https://s3.us-east-2.amazonaws.com/takeout.photos/splash.jpg");
+			
+	background-size: cover;
+		height: 300px;
+			margin: 0 auto;
+				width: 100%;
+
+      }
+      .search {
+                /*   margin: 0 auto; */
+                
+                
+                   padding: 20px;
+                   padding-top: 20px;
+                   color: #333333;
+                    font-family: Arial, Helvetica, sans-serif;
+               }
+               input {
+          background-color: white !important;
+          width: 100% !important;
+          
+      }
+        </style>
+    </headf>
+    <body>
+
+        <div class="navbar-fixed">
+            <nav>
+                
+                <div class="nav-wrapper">
+                         
+                    
+                   
+                  <ul class="right">
+                    
+                     
+                    <li><a href="/dash"><i class="material-icons">view_module</i></a></li>
+                    <li><a href="/account"><i class="material-icons">account_box</i></a></li>
+                    
+                  </ul>
+                  
+                  
+                </div>
+              </nav>
+                </div>
+
+                <div ng-app="myApp" ng-controller="customersCtrl"> 
+                    
+                    <footer class="banner color-light valign-wrapper">
+                     
+                                
+                                
+                        <div class="container ">
+                            
+                            
+                          <div class="row">
+
+                               
+                              
+                                <div class="col l3 m6 s12">
+                                    
+                                    
+                                        <div class="row search color-light-2 z-depth-5">
+                                            
+                                              
+                                                      
+                                                  <input id="search" type="text" placeholder="Enter Address">
+                                               
+                                                   
+                                               
+                                                    <a id="find" class="btnn">Find Restaurants</a>
+                                                
+                                                
+                                        </div>
+                                        
+                                </div>
+                            
+                          </div>
+                        </div>
+                      </footer>
+                        <div class="location z-depth-1"> Restaurants within <a href="#" id="radius">{{radius.value}}</a> miles of {{route}} {{city}} {{state}}  <span class="badge results right">{{results}} results</span></div>         
+                     
+                                    <!-- Modal Structure -->
+  <div id="modal1" class="modal bottom-sheet ">
+        <div class="modal-content ">
+                <p class="range-field valign-wrapper">
+                        <input type="range" id="radius-slider" min="1" max="30" />
+                      </p>
+               
+        </div>
+       
+      </div>
+
+                         
+     
+                      
+            <div class="row">
+                   
+                    <div class="col s12 m6 l4" ng-repeat="x in restaurants">
+                        <div class="card">
+                            <div class="card-image category-item z-depth-2">
+                                    <a href='/b/{{x.id}}'>
+                                        <img ng-src='https://s3.us-east-2.amazonaws.com/takeout.photos/{{x.image}}'>
+                                </a>
+                                <span class="card-title label">{{x.name}}</span>
+                            </div>
+                           
+                              
+                              <div class="card-action">
+                                    <ul class="collection ">
+                                            
+                                             <li class="collection-item"><div><i class="material-icons">location_on</i><b>{{x.distance}}</b> miles</div></li>
+                                           </ul>
+                                       </div>
+                         
+                        </div>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <div class="refer">
+                           <h4>Not seeing your favorite place?</h4><h5><a href="#" id='refer'><b>Tell Us</b></a> about a restaurant you love!</h5>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+    
+
+        
+        <script>
+            
+            app = angular.module('myApp', []);
+            app.controller('customersCtrl', function($scope, $http) {
+                // call get restaurants with null, which will use location in stored cookie
+                $scope.radius = {value:10} // set 10 as default
+                getRestaurants($scope, $http, null, $scope.radius.value);
+
+                $('.modal').modal({
+                    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                    ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                       
+                        console.log(modal, trigger);
+                    },
+                    complete: function() { 
+                        
+                        $scope.$apply(function () {
+                            $scope.radius.value = $('#radius-slider').val()
+                        });
+
+                        getRestaurants($scope, $http, null, $scope.radius.value);
+                 
+                        } // Callback for Modal close
+                    }
+                );
+               
+
+                $('#find').on('click', function (e) {
+                    var term = document.getElementById("search").value;
+                    if (term == "") {
+                        alert("Please enter address")
+                        return
+                    }
+                   getRestaurants($scope, $http, term, $scope.radius.value);
+                   
+                })
+                $('#radius').on('click', function (e) {
+                //   alert('radius')
+                   $('#modal1').modal('open');
+                   
+                })
+                $('#refer').on('click', function (e) {
+                   
+                 
+
+                   
+                    refer($scope, $http);
+                   
+                })
+              
+            });
+
+            function refer($scope, $http) {
+                
+                swal({
+                   
+                    title: "Tell us about a place you'd like to see listed!",
+                    text: "Mention your favorite restaurant and we'll discount your first order when they come online!",
+                    icon: "https://s3.us-east-2.amazonaws.com/takeout.photos/4f9b5b00-0318-11e8-bf80-9b23f629b198.jpg",
+                    buttons: {
+                            next: {
+                                text: "Next",
+                                value: "next",
+                            },
+                            cancel : true
+                        }
+                }).then((b) => {
+                    if (b != "next") {
+                        return
+                    }
+                   
+                swal({
+                        title : "Restaurant name",
+                        content : "input",
+                        button : "Next"
+                    }).then((name) => {
+                        if (name == null) {
+                            return;
+                        }
+                        swal({
+                          
+                            title : "Restaurant location",
+                            text : "(City and State)",
+                            content : "input",
+                            button : "Next"
+                        }).then((address) => {
+                            if (address == null) {
+                                return;
+                            }
+                            swal({
+                              
+                                title : "Restaurant Phone",
+                                content : "input",
+                                button : "Next"
+                            }).then((phone) => {
+                                if (phone == null) {
+                                    return;
+                                }
+                                swal({
+                                    title : "Your Email Address",
+                                    content : "input",
+                                    button : "Submit"
+                                }).then((email) => {
+                                    if (email == null) {
+                                        return;
+                                    }
+                                    myobject = {'name' : name, 'address' : address, 'phone' : phone, 'email' : email }
+                                    Object.toparams = function ObjecttoParams(obj) {
+                                        var p = [];
+                                        for (var key in obj) {
+                                            p.push(key + '=' + encodeURIComponent(obj[key]));
+                                        }
+                                        return p.join('&');
+                                    };
+                                    $http({
+                                        method: 'POST',
+                                        url: '/refer',
+                                        data: Object.toparams(myobject),
+                                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                                    }).then(function (response) {
+                                       swal("Thank you for letting us know!", "We'll get in touch with the restaurant and shoot you an email when things are setup", "success", {
+                                          button : "Sweet"
+                                       })
+                                    });
+                                
+                                });
+                            });
+                        });
+                    });
+                });
+                
+
+                  
+                
+            };
+
+            function getRestaurants($scope, $http, keyword, radius) {
+                if (keyword != null) {
+                    myobject = {'term': keyword, 'radius' : radius}
+                }
+                if (keyword == null) {
+                    myobject = {'radius' : radius }
+                }
+               
+                Object.toparams = function ObjecttoParams(obj) {
+                    var p = [];
+                    for (var key in obj) {
+                        p.push(key + '=' + encodeURIComponent(obj[key]));
+                    }
+                    return p.join('&');
+                };
+                $http({
+                    method: 'POST',
+                    url: '/getRestaurants',
+                    data: Object.toparams(myobject),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function (response) {
+                   
+                    if (response.data == 'none') {
+                        $scope.restaurants = null;
+                        $scope.results = "" + 0
+                        return
+                    }
+
+                    if (response.data == "check_address") {
+                        alert("Please check your address and try again");
+                        return
+                    }
+                    $scope.restaurants = response.data.restaurants;
+                    $scope.city = response.data.location.city + ","
+                    $scope.route = response.data.location.route
+                    $scope.state = response.data.location.state
+                    $scope.distance = response.data.distance;
+                    $scope.results = response.data.restaurants.length
+                    items = response.data;
+
+                })
+            }
+           
+
+function handle(e){
+        if(e.keyCode === 13){
+            e.preventDefault(); // Ensure it is only this code that rusn
+
+            var term = document.getElementById("search").value;
+
+            if (term != "") {
+              $.ajax({
+                    type: 'POST',
+                    url: '/search',
+                    data: { 
+                        term : term
+                    },
+                    success: function(msg){
+                      alert(msg)
+                    }
+                  });
+              }
+          }
+      }
+
+$('.parallax').parallax();
+  
+ 
+        </script>
+    </body>
+</html>
